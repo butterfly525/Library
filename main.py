@@ -2,7 +2,7 @@ import json
 import os
 import uuid
 from datetime import datetime
-from typing import NoReturn, Optional, List
+from typing import NoReturn, Optional, List, Dict, Union
 
 
 class Book:
@@ -69,8 +69,7 @@ class Book:
     def status(self, value: str) -> NoReturn:
         valid_statuses = ['в наличии', 'выдана']
         if value.lower() not in [s for s in valid_statuses]:
-            raise ValueError(f"Статус должен быть одним из следующих: {
-                             ', '.join(valid_statuses)}")
+            raise ValueError(f"Статус должен быть одним из следующих: {', '.join(valid_statuses)}")
         self._status = value
 
     @classmethod #Получает id для книги и записывает в файл значение уваеличенное на 1
@@ -88,7 +87,7 @@ class Book:
                 f.write(str(cls.id_counter))
         return cls.id_counter
 
-    def to_dict(self) -> dict[str, str | int]: #Преобразует Book в словарь
+    def to_dict(self) -> Dict[str, Union[str, int]]: #Преобразует Book в словарь
         return {
             'id': self.id,
             'title': self.title,
@@ -98,7 +97,7 @@ class Book:
         }
 
     @classmethod
-    def from_dict(cls, data) -> 'Book': #Преобразует словарь в Book
+    def from_dict(cls, data: Dict[str, Union[str, int]]) -> 'Book': #Преобразует словарь в Book
         return cls(data['title'], data['author'], data['year'], data['id'], data['status'])
 
     def __str__(self) -> str:
@@ -168,8 +167,7 @@ class Library:
             if book.id == id:
                 book.status = new_status
                 book_found = True
-                print(f"Статус книги \"{
-                      book.title}\" изменен на \"{book.status}\"")
+                print(f"Статус книги \"{book.title}\" изменен на \"{book.status}\"")
                 self.save_list_book()
                 return
         if not book_found:
@@ -271,6 +269,6 @@ class LibraryManagement:
             except Exception as e:
                 print(f"{e}", end="\n\n")
 
-
-l: LibraryManagement = LibraryManagement()
-l.start_managing_library()
+if __name__ == '__main__':
+    l: LibraryManagement = LibraryManagement()
+    l.start_managing_library()
