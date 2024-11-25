@@ -78,9 +78,9 @@ class Book:
         if os.path.exists(counter_filename):
             with open(counter_filename, 'r') as f:
                 cls.id_counter = f.read()
-                cls.id_counter = int(cls.id_counter) + 1
+                cls.id_counter = int(cls.id_counter) 
             with open(counter_filename, 'w') as f:
-                f.write(str(cls.id_counter))
+                f.write(str(cls.id_counter + 1))
             return cls.id_counter
         else:
             with open(counter_filename, 'w') as f:
@@ -155,7 +155,7 @@ class Library:
                 search_books.append(book)
                 print(book)
         if not search_books:
-            print("Ни одна книга не соответсвует поисковому запросу.", end="\n\n")
+            print("Ни одна книга не соответствует поисковому запросу.", end="\n\n")
 
     def change_book_status(self, id: str, new_status: str) -> None: # изменяет статус книги в библиотеке и обновляет файл со списком книг
         if not id.isdigit():
