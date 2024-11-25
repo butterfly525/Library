@@ -10,7 +10,7 @@ class TestBook(unittest.TestCase):
     проверка присваеваемых значений в поля, преобразование объекта book в словарь и из словаря в объект book
     """
     @patch('builtins.open', new_callable=mock_open, read_data="1")
-    def test_initialization_with_new_id(self, mock_file): # тест создания нового объекта Book без указания id в init 
+    def test_initialization_with_new_id(self, mock_file): # тестирование создания нового объекта Book без указания id в init 
         book = Book(title="Горе от ума", author="Александр Грибоедов", year="1825")
         self.assertEqual(book.id, 1)
         self.assertEqual(book.title, "Горе от ума")
@@ -19,7 +19,7 @@ class TestBook(unittest.TestCase):
         self.assertEqual(book.status, 'в наличии')
 
     @patch('builtins.open', new_callable=mock_open, read_data='4')
-    def test_initialization_with_existing_id(self, mock_file): # тест создания объекта Book на основе данных, например, прочитанных из файла
+    def test_initialization_with_existing_id(self, mock_file): # тестирование создания объекта Book на основе данных, например, прочитанных из файла
         book = Book(title="Горе от ума", author="Александр Грибоедов", year="1825", id=5) #тут id ранее известен - прочитан из файла, это используется в методе from_dict()
         self.assertEqual(book.id, 5)
 
@@ -61,7 +61,7 @@ class TestBook(unittest.TestCase):
         }
         self.assertEqual(book.to_dict(), expected_dict)
 
-    def test_from_dict(self): #тестирование преобразования словарь в объекта book
+    def test_from_dict(self): # тестирование преобразования словарь в объекта book
         data = {
             'id': 1,
             'title': "Название",
